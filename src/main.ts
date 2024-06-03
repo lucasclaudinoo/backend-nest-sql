@@ -8,6 +8,7 @@ async function bootstrap() {
     origin: 'http://localhost:4200', 
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
     allowedHeaders: 'Content-Type, Accept', 
+    credentials: true,
   });
   const config = new DocumentBuilder()
     .setTitle('Your App Name')
