@@ -1,9 +1,18 @@
 USE mydatabase;
 
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS organizations;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE organizations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    region VARCHAR(255) NOT NULL,
+    specialties VARCHAR(255) NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE
 );

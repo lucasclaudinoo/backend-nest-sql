@@ -20,12 +20,13 @@ export class AuthService {
 
   async createMockUser() {
     const mockUserDto: CreateUserDto = {
-      email: 'mock@example.com',
-      password: 'mockpassword'
+      email: '123@123.com',
+      password: '123'
     };
   
     const existingUser = await this.usersRepository.findOne({ where: { email: mockUserDto.email } });
-  
+    
+    console.log('existingUser', existingUser);
     if (!existingUser) {
       this.register(mockUserDto);
     }
@@ -41,6 +42,7 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto): Promise<{ accessToken: string, refreshToken: string }> {
+    console.log('Login attempt', loginDto);
     const users = await this.usersRepository.find({ where: { email: loginDto.email } });
     if (users.length > 0 && await bcrypt.compare(loginDto.password, users[0].password)) {
       const payload = { username: users[0].email, sub: users[0].id };
