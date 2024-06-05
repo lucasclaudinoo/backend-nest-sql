@@ -19,8 +19,8 @@ export class AuthService {
 
   async createMockUser() {
     const mockUserDto: CreateUserDto = {
-      email: '123@123.com',
-      password: '123',
+      email: 'test@mock.com',
+      password: 'mock',
     };
 
     const existingUser = await this.usersRepository.findOne({
