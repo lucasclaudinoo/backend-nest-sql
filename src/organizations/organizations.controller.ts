@@ -1,10 +1,25 @@
-// src/organizations/organizations.controller.ts
-import { Controller, Get, Query, Param, Post, Body, Put, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  Param,
+  Post,
+  Body,
+  Put,
+  Delete,
+  ParseIntPipe,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { OrganizationsService } from './organizations.service';
-import { CreateOrganizationDto, UpdateOrganizationDto } from './dto/create-entity.dto';
-import { Organization } from './entities/organization.entities';
-
+import {
+  CreateOrganizationDto,
+  UpdateOrganizationDto,
+} from './dto/create-entity.dto';
+import { Request } from 'express';
+import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 @Controller('organizations')
+@UseGuards(JwtAuthGuard) // Aplicando o JwtAuthGuard a todas as rotas do controller
 export class OrganizationsController {
   constructor(private readonly organizationsService: OrganizationsService) {}
 
@@ -23,12 +38,19 @@ export class OrganizationsController {
   }
 
   @Post()
-  async create(@Body() createOrganizationDto: CreateOrganizationDto) {
-    return this.organizationsService.create(createOrganizationDto);
+  async create(
+    @Body() createOrganizationDto: CreateOrganizationDto,
+    @Req() req: Request,
+  ) {
+    const userId = req.body.userId;
+    return this.organizationsService.create(createOrganizationDto, userId);
   }
 
   @Put(':id')
-  async update(@Param('id', ParseIntPipe) id: number, @Body() updateOrganizationDto: UpdateOrganizationDto) {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateOrganizationDto: UpdateOrganizationDto,
+  ) {
     return this.organizationsService.update(id, updateOrganizationDto);
   }
 

@@ -6,14 +6,26 @@ export class Organization {
   id: number;
 
   @Column()
-  name: string;
+  razaoSocial: string;
 
   @Column()
-  region: string;
+  nomeFantasia: string;
 
   @Column()
-  specialties: string;
+  cnpj: string;
 
-  @Column({ default: true })
-  active: boolean;
+  @Column()
+  regional: string;
+
+  @Column({ type: 'timestamp' })
+  dataInauguracao: Date;
+
+  @Column('simple-array')
+  especialidadesMedicas: string[];
+
+  @Column()
+  ativa: boolean;
+
+  @Column()
+  userId: number;
 }

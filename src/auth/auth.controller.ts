@@ -1,4 +1,11 @@
-import { Controller, Post, Body, UnauthorizedException, Res, Req } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UnauthorizedException,
+  Res,
+  Req,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
@@ -12,19 +19,21 @@ export class AuthController {
   async register(@Body() createUserDto: CreateUserDto) {
     return this.authService.register(createUserDto);
   }
-
   @Post('login')
   async login(@Body() loginDto: LoginDto, @Res() res: Response) {
     const tokens = await this.authService.login(loginDto);
+
     if (!tokens) {
       throw new UnauthorizedException('Invalid credentials');
     }
+
     res.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
     });
-    return res.json({ accessToken: tokens.accessToken });
+    console.log('Login successful');
+    return res.json({ accessToken: tokens.accessToken, userId: tokens.userId });
   }
 
   @Post('refresh')

@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Organization } from 'src/organizations/entities/organization.entities';
 @Entity()
 export class users {
   @PrimaryGeneratedColumn()
@@ -10,4 +10,7 @@ export class users {
 
   @Column()
   password: string;
+
+  @OneToMany(() => Organization, (organization) => organization.userId)
+  organizations: Organization[];
 }

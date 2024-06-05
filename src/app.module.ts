@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
-import { users } from './auth/entities/user.entity';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { users } from './auth/entities/user.entity';
 import { Organization } from './organizations/entities/organization.entities';
 
 @Module({
@@ -19,7 +19,6 @@ import { Organization } from './organizations/entities/organization.entities';
     }),
     AuthModule,
     OrganizationsModule,
-
   ],
 })
 export class AppModule {}
